@@ -57,7 +57,7 @@ describe('Task Service Unit Tests', () => {
     taskService.create({ title: 'Task 3' });
 
     // Note: Testing the current pagination logic behavior
-    const page1 = taskService.getPaginated(0, 2);
+    const page1 = taskService.getPaginated(1, 2);
     expect(page1.length).toBe(2);
     expect(page1[0].title).toBe('Task 1');
   });

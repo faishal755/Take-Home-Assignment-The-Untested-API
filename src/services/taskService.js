@@ -9,7 +9,7 @@ const findById = (id) => tasks.find((t) => t.id === id);
 const getByStatus = (status) => tasks.filter((t) => t.status.includes(status));
 
 const getPaginated = (page, limit) => {
-  const offset = page * limit;
+  const offset = (page - 1) * limit;
   return tasks.slice(offset, offset + limit);
 };
 
@@ -80,6 +80,21 @@ const _reset = () => {
   tasks = [];
 };
 
+const assignTask = (id, assignee) => {
+  const task = findById(id);
+  if (!task) return null;
+
+  const updatedTask = {
+    ...task,
+    assignee: assignee.trim(),
+    updatedAt: new Date().toISOString(), // optional, keeps timestamps fresh if used
+  };
+
+  const index = tasks.findIndex((t) => t.id === id);
+  tasks[index] = updatedTask;
+  return updatedTask;
+};
+
 module.exports = {
   getAll,
   findById,
@@ -91,4 +106,5 @@ module.exports = {
   remove,
   completeTask,
   _reset,
+  assignTask,
 };
